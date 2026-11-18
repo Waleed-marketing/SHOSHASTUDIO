@@ -1,1 +1,1686 @@
-<h1>Shosha Studio - Coming Soon</h1>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shosha Studio | 3D Character Modeling & Animation Studio</title>
+  <meta name="description" content="Shosha Studio — Custom 3D character modeling, watertight printable miniatures, articulated action figures, and commercial mascot animations." />
+
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0B0D12',
+            slatecard: '#141821',
+            slatehover: '#1A202C',
+            amberbrand: '#F59E0B',
+            amberhot: '#FF8A1E',
+            inkprimary: '#F3F4F6',
+            inkmuted: '#9CA3AF',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          boxShadow: {
+            'amber-glow': '0 0 35px -8px rgba(245, 158, 11, 0.45)',
+            'card-dark': '0 20px 50px -20px rgba(0, 0, 0, 0.75)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Studio Styles & Subtle Animations -->
+  <style>
+    body {
+      background-color: #0B0D12;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Subtle dark studio grid backdrop */
+    .studio-grid {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Glassmorphic surface */
+    .glass-nav {
+      background: rgba(11, 13, 18, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Card border & lift */
+    .studio-card {
+      background-color: #141821;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .studio-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 158, 11, 0.38);
+      box-shadow: 0 22px 45px -18px rgba(0, 0, 0, 0.85), 0 0 24px -10px rgba(245, 158, 11, 0.25);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0D12;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232938;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #F59E0B;
+    }
+
+    /* Accordion smooth open */
+    .faq-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s ease-out;
+    }
+    .faq-item[data-open="true"] .faq-content {
+      grid-template-rows: 1fr;
+    }
+    .faq-inner {
+      overflow: hidden;
+    }
+    .faq-item[data-open="true"] .faq-chevron {
+      transform: rotate(180deg);
+      color: #F59E0B;
+    }
+
+    /* Modal fade */
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalIn 0.22s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-amberbrand/30 selection:text-amber-200">
+
+  <!-- ==================== 1. STICKY GLASSMORPHIC NAVBAR ==================== -->
+  <header class="fixed top-0 inset-x-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3.5">
+        <!-- Brand Logo -->
+        <a href="#top" class="flex items-center gap-3 group focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amberbrand to-amberhot flex items-center justify-center shadow-amber-glow group-hover:scale-105 transition-transform">
+            <!-- Geometric 3D Cube SVG Icon -->
+            <svg class="w-5 h-5 text-obsidian" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2L20.5 7V17L12 22L3.5 17V7L12 2Z" />
+              <path d="M12 22V12" />
+              <path d="M20.5 7L12 12L3.5 7" />
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <span class="font-display font-bold tracking-wider text-base sm:text-lg text-inkprimary block">SHOSHA STUDIO</span>
+            <span class="text-[10px] uppercase tracking-[0.22em] text-amberbrand font-medium block">3D Characters &amp; Animation</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-inkmuted">
+          <a href="#work" class="hover:text-inkprimary transition-colors">Work</a>
+          <a href="#services" class="hover:text-inkprimary transition-colors">Services</a>
+          <a href="#pipeline" class="hover:text-inkprimary transition-colors">Pipeline</a>
+          <a href="#clients" class="hover:text-inkprimary transition-colors">Clients</a>
+          <a href="#faq" class="hover:text-inkprimary transition-colors">FAQ</a>
+        </nav>
+
+        <!-- Desktop CTA + Mobile Menu Button -->
+        <div class="flex items-center gap-3">
+          <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amberbrand to-amberhot text-obsidian font-semibold text-sm hover:brightness-110 transition-all shadow-amber-glow">
+            Start a Commission
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+
+          <!-- Mobile Hamburger Button -->
+          <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" aria-expanded="false" class="md:hidden p-2.5 rounded-xl bg-slatecard border border-white/10 text-inkprimary hover:border-amberbrand/50 transition-colors">
+            <svg id="menu-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+            <svg id="menu-icon-close" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-obsidian/95 backdrop-blur-xl">
+      <div class="px-4 py-4 space-y-2">
+        <a href="#work" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-medium text-inkprimary hover:bg-slatecard">Work</a>
+        <a href="#services" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-medium text-inkprimary hover:bg-slatecard">Services</a>
+        <a href="#pipeline" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-medium text-inkprimary hover:bg-slatecard">Pipeline</a>
+        <a href="#clients" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-medium text-inkprimary hover:bg-slatecard">Clients</a>
+        <a href="#faq" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-medium text-inkprimary hover:bg-slatecard">FAQ</a>
+        <div class="pt-2">
+          <a href="#contact" class="mobile-nav-link w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amberbrand to-amberhot text-obsidian font-semibold text-sm">
+            Start a Commission
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden studio-grid">
+      <!-- Ambient Amber Radial Glows -->
+      <div class="pointer-events-none absolute -top-24 left-1/4 w-[520px] h-[520px] rounded-full bg-amberbrand/10 blur-[130px]"></div>
+      <div class="pointer-events-none absolute bottom-0 right-0 w-[420px] h-[420px] rounded-full bg-amberhot/10 blur-[120px]"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+
+          <!-- Left Column: Copy & Actions -->
+          <div class="lg:col-span-7 space-y-7">
+            <!-- Pulsing Status Pill -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slatecard/90 border border-amberbrand/30 text-xs font-semibold tracking-wider uppercase text-amber-300">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amberbrand opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amberbrand"></span>
+              </span>
+              COMMISSIONS OPEN &bull; 3D CHARACTERS &amp; ANIMATION
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-[3.6rem] leading-[1.07] tracking-tight text-inkprimary">
+              Sculpting Characters Built to
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-amberbrand via-amber-300 to-amberhot">Print, Play &amp; Perform.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-base sm:text-lg text-inkmuted max-w-2xl leading-relaxed">
+              Custom 3D character modeling, watertight printable miniatures, articulated action figures, and commercial mascot animations&mdash;from ZBrush clay sculpt to final render.
+            </p>
+
+            <!-- CTA Button Row -->
+            <div class="flex flex-wrap items-center gap-3.5 pt-2">
+              <a href="#contact" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amberbrand to-amberhot text-obsidian font-semibold text-sm sm:text-base hover:brightness-110 transition-all shadow-amber-glow">
+                Start a Commission
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+              </a>
+
+              <a href="#work" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slatecard border border-white/15 text-inkprimary font-medium text-sm sm:text-base hover:border-amberbrand/50 hover:bg-slatehover transition-all">
+                Explore Work
+              </a>
+
+              <a href="https://www.instagram.com/shosha.studio/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-transparent border border-white/10 text-inkmuted hover:text-amber-300 hover:border-amberbrand/40 font-medium text-sm sm:text-base transition-all">
+                <!-- Instagram Icon -->
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                DM on Instagram
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Studio Showcase Card -->
+          <div class="lg:col-span-5">
+            <div class="rounded-2xl bg-slatecard border border-white/10 p-5 sm:p-6 shadow-card-dark relative overflow-hidden">
+              <!-- Card Header + Interactive Clay vs Final Render Toggle -->
+              <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-widest text-amberbrand block">Proof of Craft</span>
+                  <h2 class="font-display font-semibold text-base text-inkprimary" id="hero-preview-title">Final PBR Render</h2>
+                </div>
+
+                <!-- Interactive Mode Toggle -->
+                <div class="inline-flex p-1 rounded-xl bg-obsidian border border-white/10" role="tablist" aria-label="Render Preview Mode">
+                  <button id="toggle-clay" type="button" role="tab" aria-selected="false" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-inkmuted hover:text-inkprimary">
+                    ZBrush Clay
+                  </button>
+                  <button id="toggle-render" type="button" role="tab" aria-selected="true" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-gradient-to-r from-amberbrand to-amberhot text-obsidian shadow">
+                    Final Render
+                  </button>
+                </div>
+              </div>
+
+              <!-- Visual Viewport Container -->
+              <div class="relative rounded-xl bg-obsidian border border-white/10 aspect-[4/3] overflow-hidden flex items-center justify-center">
+                <!-- Viewport Grid & Corner Reticles -->
+                <div class="absolute inset-0 studio-grid opacity-60"></div>
+                <div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-inkmuted">
+                  <span id="viewport-dot" class="w-1.5 h-1.5 rounded-full bg-amberbrand"></span>
+                  <span id="viewport-badge">SHADED • 4K PBR</span>
+                </div>
+                <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-inkmuted" id="viewport-poly">
+                  42.8K TRIS • WATERTIGHT
+                </div>
+
+                <!-- Mode 1: Final Render SVG (Armored Sci-Fi Character / Studio Lit) -->
+                <svg id="hero-svg-render" viewBox="0 0 400 300" class="w-full h-full relative z-10 transition-opacity duration-300" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="renderBgGlow" cx="50%" cy="45%" r="55%">
+                      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.28"/>
+                      <stop offset="60%" stop-color="#1E293B" stop-opacity="0.18"/>
+                      <stop offset="100%" stop-color="#0B0D12" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="armorMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38BDF8"/>
+                      <stop offset="45%" stop-color="#1D4ED8"/>
+                      <stop offset="100%" stop-color="#0F172A"/>
+                    </linearGradient>
+                    <linearGradient id="armorGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#FDE047"/>
+                      <stop offset="50%" stop-color="#F59E0B"/>
+                      <stop offset="100%" stop-color="#B45309"/>
+                    </linearGradient>
+                    <linearGradient id="darkPlate" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#334155"/>
+                      <stop offset="100%" stop-color="#0F172A"/>
+                    </linearGradient>
+                    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="4" result="blur"/>
+                      <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <rect width="400" height="300" fill="url(#renderBgGlow)"/>
+                  <!-- Turntable Pedestal -->
+                  <ellipse cx="200" cy="262" rx="108" ry="18" fill="#141821" stroke="#F59E0B" stroke-opacity="0.35" stroke-width="1.5"/>
+                  <ellipse cx="200" cy="262" rx="78" ry="11" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1"/>
+                  <!-- Shoulders & Torso Armor -->
+                  <path d="M122 182 C125 148 156 135 200 135 C244 135 275 148 278 182 L262 252 L138 252 Z" fill="url(#armorMetal)" stroke="#60A5FA" stroke-opacity="0.5" stroke-width="1.5"/>
+                  <!-- Gold Chest Trim -->
+                  <path d="M150 156 L200 176 L250 156 L242 204 L200 220 L158 204 Z" fill="url(#armorGold)" stroke="#FEF08A" stroke-opacity="0.6" stroke-width="1"/>
+                  <!-- Shoulder Pauldrons -->
+                  <path d="M104 176 C106 146 132 132 156 140 L146 184 Z" fill="url(#darkPlate)" stroke="#F59E0B" stroke-width="1.5"/>
+                  <path d="M296 176 C294 146 268 132 244 140 L254 184 Z" fill="url(#darkPlate)" stroke="#F59E0B" stroke-width="1.5"/>
+                  <!-- Chest Core Emblem -->
+                  <polygon points="200,174 216,192 200,210 184,192" fill="#0B0D12" stroke="#FDE047" stroke-width="2" filter="url(#neonGlow)"/>
+                  <circle cx="200" cy="192" r="5" fill="#FDE047" filter="url(#neonGlow)"/>
+                  <!-- Neck -->
+                  <rect x="184" y="114" width="32" height="28" rx="6" fill="#1E293B"/>
+                  <!-- Stylized Helmet / Head with Ears -->
+                  <path d="M168 62 L152 28 L178 48 Z" fill="url(#armorGold)"/>
+                  <path d="M232 62 L248 28 L222 48 Z" fill="url(#armorGold)"/>
+                  <path d="M162 84 C162 56 178 44 200 44 C222 44 238 56 238 84 C238 112 222 126 200 126 C178 126 162 112 162 84 Z" fill="url(#darkPlate)" stroke="#60A5FA" stroke-opacity="0.5" stroke-width="1.5"/>
+                  <!-- Glowing Visor Triangle -->
+                  <polygon points="200,72 218,100 182,100" fill="none" stroke="#F59E0B" stroke-width="3" filter="url(#neonGlow)"/>
+                  <polygon points="200,78 212,97 188,97" fill="#F59E0B" fill-opacity="0.25"/>
+                  <!-- Rim light accents -->
+                  <path d="M165 68 C172 52 185 48 200 48" fill="none" stroke="#FDE047" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+                </svg>
+
+                <!-- Mode 2: ZBrush Clay Sculpt SVG (Hidden by default) -->
+                <svg id="hero-svg-clay" viewBox="0 0 400 300" class="w-full h-full relative z-10 hidden transition-opacity duration-300" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="clayBg" cx="50%" cy="45%" r="55%">
+                      <stop offset="0%" stop-color="#9CA3AF" stop-opacity="0.18"/>
+                      <stop offset="100%" stop-color="#0B0D12" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="matcapClay" x1="20%" y1="10%" x2="85%" y2="95%">
+                      <stop offset="0%" stop-color="#E5E7EB"/>
+                      <stop offset="48%" stop-color="#9CA3AF"/>
+                      <stop offset="100%" stop-color="#374151"/>
+                    </linearGradient>
+                    <linearGradient id="matcapDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#D1D5DB"/>
+                      <stop offset="100%" stop-color="#4B5563"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="400" height="300" fill="url(#clayBg)"/>
+                  <!-- Turntable Pedestal -->
+                  <ellipse cx="200" cy="262" rx="108" ry="18" fill="#1F2430" stroke="#9CA3AF" stroke-opacity="0.35" stroke-width="1.2"/>
+                  <!-- Clay Torso -->
+                  <path d="M122 182 C125 148 156 135 200 135 C244 135 275 148 278 182 L262 252 L138 252 Z" fill="url(#matcapClay)" stroke="#E5E7EB" stroke-opacity="0.35" stroke-width="1"/>
+                  <!-- Clay Chest Plates -->
+                  <path d="M150 156 L200 176 L250 156 L242 204 L200 220 L158 204 Z" fill="url(#matcapDark)" stroke="#F3F4F6" stroke-opacity="0.35" stroke-width="1"/>
+                  <!-- Clay Pauldrons -->
+                  <path d="M104 176 C106 146 132 132 156 140 L146 184 Z" fill="url(#matcapClay)" stroke="#F3F4F6" stroke-opacity="0.3" stroke-width="1"/>
+                  <path d="M296 176 C294 146 268 132 244 140 L254 184 Z" fill="url(#matcapClay)" stroke="#F3F4F6" stroke-opacity="0.3" stroke-width="1"/>
+                  <!-- Clay Core -->
+                  <polygon points="200,174 216,192 200,210 184,192" fill="#4B5563" stroke="#E5E7EB" stroke-width="1.2"/>
+                  <!-- Clay Neck -->
+                  <rect x="184" y="114" width="32" height="28" rx="6" fill="#6B7280"/>
+                  <!-- Clay Ears & Head -->
+                  <path d="M168 62 L152 28 L178 48 Z" fill="url(#matcapClay)"/>
+                  <path d="M232 62 L248 28 L222 48 Z" fill="url(#matcapClay)"/>
+                  <path d="M162 84 C162 56 178 44 200 44 C222 44 238 56 238 84 C238 112 222 126 200 126 C178 126 162 112 162 84 Z" fill="url(#matcapClay)" stroke="#F3F4F6" stroke-opacity="0.4" stroke-width="1"/>
+                  <polygon points="200,72 218,100 182,100" fill="#374151" stroke="#E5E7EB" stroke-width="1.5"/>
+                  <!-- Subtle Retopo Wireframe Overlay Lines -->
+                  <g stroke="#F59E0B" stroke-opacity="0.32" stroke-width="0.7" fill="none">
+                    <line x1="200" y1="44" x2="200" y2="252"/>
+                    <path d="M162 84 Q200 92 238 84"/>
+                    <path d="M134 168 Q200 184 266 168"/>
+                    <path d="M142 212 Q200 228 258 212"/>
+                    <path d="M166 138 L158 252"/>
+                    <path d="M234 138 L242 252"/>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Studio Metrics Row -->
+              <div class="grid grid-cols-3 gap-2.5 mt-4">
+                <div class="rounded-xl bg-obsidian/80 border border-white/5 p-3 text-center">
+                  <div class="font-display font-bold text-lg text-amberbrand">60+</div>
+                  <div class="text-[11px] text-inkmuted">Custom Sculpts</div>
+                </div>
+                <div class="rounded-xl bg-obsidian/80 border border-white/5 p-3 text-center">
+                  <div class="font-display font-bold text-lg text-inkprimary">Print &amp; Game</div>
+                  <div class="text-[11px] text-inkmuted">Production Ready</div>
+                </div>
+                <div class="rounded-xl bg-obsidian/80 border border-white/5 p-3 text-center">
+                  <div class="font-display font-bold text-lg text-inkprimary">Global</div>
+                  <div class="text-[11px] text-inkmuted">Studio Clients</div>
+                </div>
+              </div>
+
+              <!-- Software Stack Strip -->
+              <div class="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+                <span class="text-[11px] uppercase tracking-wider text-inkmuted font-medium">Pipeline Stack:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-medium text-inkprimary">ZBrush</span>
+                  <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-medium text-inkprimary">Blender</span>
+                  <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-medium text-inkprimary">Substance 3D</span>
+                  <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-medium text-inkprimary">Unity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. CLIENT ROSTER STRIP ==================== -->
+    <section id="clients" class="py-10 border-y border-white/10 bg-slatecard/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-xs font-semibold uppercase tracking-[0.24em] text-inkmuted mb-6">
+          Trusted By Brands, Studios &amp; Collectors
+        </p>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+          <div class="px-5 py-4 rounded-xl bg-obsidian/60 border border-white/5 text-center hover:border-amberbrand/30 transition-colors">
+            <span class="font-display font-bold tracking-[0.16em] text-sm sm:text-base text-inkprimary">RED WRITER LLC</span>
+            <span class="block text-[11px] text-inkmuted mt-0.5">Comic &amp; IP Characters</span>
+          </div>
+          <div class="px-5 py-4 rounded-xl bg-obsidian/60 border border-white/5 text-center hover:border-amberbrand/30 transition-colors">
+            <span class="font-display font-bold tracking-[0.14em] text-sm sm:text-base text-inkprimary">INFLATABLE WORLD / PCYC</span>
+            <span class="block text-[11px] text-inkmuted mt-0.5">Mascots &amp; Commercial 3D</span>
+          </div>
+          <div class="px-5 py-4 rounded-xl bg-obsidian/60 border border-white/5 text-center hover:border-amberbrand/30 transition-colors">
+            <span class="font-display font-bold tracking-[0.18em] text-sm sm:text-base text-inkprimary">3D MUSEUM</span>
+            <span class="block text-[11px] text-inkmuted mt-0.5">Classical Statues &amp; Busts</span>
+          </div>
+          <div class="px-5 py-4 rounded-xl bg-obsidian/60 border border-white/5 text-center hover:border-amberbrand/30 transition-colors">
+            <span class="font-display font-bold tracking-[0.24em] text-sm sm:text-base text-inkprimary">HUSK</span>
+            <span class="block text-[11px] text-inkmuted mt-0.5">Stylized Brand Character</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. FILTERABLE PORTFOLIO GRID ==================== -->
+    <section id="work" class="py-20 sm:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">Portfolio Showcase</span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">Selected Works</h2>
+            <p class="text-inkmuted mt-2 max-w-xl text-sm sm:text-base">
+              Click any project to inspect tools, deliverables, and studio specifications&mdash;or commission a similar piece.
+            </p>
+          </div>
+          <a href="https://www.artstation.com/shoshastudio" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-medium text-amberbrand hover:text-amber-300 transition-colors">
+            View Full ArtStation Archive
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M7 7h10v10"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div id="portfolio-filters" class="flex flex-wrap gap-2.5 mb-10" role="tablist" aria-label="Portfolio Categories">
+          <button data-filter="All" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gradient-to-r from-amberbrand to-amberhot text-obsidian shadow-amber-glow">
+            All
+          </button>
+          <button data-filter="3D Print & Miniatures" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slatecard border border-white/10 text-inkmuted hover:text-inkprimary hover:border-amberbrand/40">
+            3D Print &amp; Miniatures
+          </button>
+          <button data-filter="Game & Comic Characters" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slatecard border border-white/10 text-inkmuted hover:text-inkprimary hover:border-amberbrand/40">
+            Game &amp; Comic Characters
+          </button>
+          <button data-filter="Mascots & Animation" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slatecard border border-white/10 text-inkmuted hover:text-inkprimary hover:border-amberbrand/40">
+            Mascots &amp; Animation
+          </button>
+          <button data-filter="Action Figures" class="filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slatecard border border-white/10 text-inkmuted hover:text-inkprimary hover:border-amberbrand/40">
+            Action Figures
+          </button>
+        </div>
+
+        <!-- Portfolio Grid Container (Populated by JS) -->
+        <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Cards rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. SERVICES & DELIVERABLES ==================== -->
+    <section id="services" class="py-20 sm:py-28 bg-slatecard/30 border-y border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">What We Deliver</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">Services &amp; Deliverables</h2>
+          <p class="text-inkmuted mt-3 text-sm sm:text-base">
+            Every asset is engineered for its exact destination&mdash;whether it's heading to a 12K resin printer, a game engine, or a commercial broadcast.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Service 1 -->
+          <div class="studio-card rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amberbrand/15 border border-amberbrand/30 flex items-center justify-center text-amberbrand mb-5">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2l8 4.5v11L12 22l-8-4.5v-11L12 2z"/>
+                  <path d="M12 12l8-4.5M12 12v10M12 12L4 7.5"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-inkprimary">3D Printable Miniatures &amp; Statues</h3>
+              <p class="text-sm text-inkmuted mt-2.5 leading-relaxed">
+                High-resolution tabletop miniatures, classical museum busts, and collector statues sculpted with crisp detail that holds up at 32mm or 1:4 scale.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10">
+              <span class="text-[11px] uppercase tracking-wider text-amberbrand font-semibold">Deliverables</span>
+              <p class="text-xs text-inkprimary mt-1">Watertight, hollowed &amp; keyed STL / OBJ</p>
+            </div>
+          </div>
+
+          <!-- Service 2 -->
+          <div class="studio-card rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amberbrand/15 border border-amberbrand/30 flex items-center justify-center text-amberbrand mb-5">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="5" r="2.5"/>
+                  <path d="M6 10l6 2 6-2"/>
+                  <path d="M12 12v5"/>
+                  <path d="M9 22l3-5 3 5"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-inkprimary">Action Figures &amp; Toys</h3>
+              <p class="text-sm text-inkmuted mt-2.5 leading-relaxed">
+                Engineered articulated ball-jointed figures and designer toys with clean tolerances, swappable parts, and assembly-ready pegs.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10">
+              <span class="text-[11px] uppercase tracking-wider text-amberbrand font-semibold">Deliverables</span>
+              <p class="text-xs text-inkprimary mt-1">Articulated ball-joints, cut &amp; keyed for resin/injection</p>
+            </div>
+          </div>
+
+          <!-- Service 3 -->
+          <div class="studio-card rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amberbrand/15 border border-amberbrand/30 flex items-center justify-center text-amberbrand mb-5">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="3"/>
+                  <path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-inkprimary">Game &amp; Comic Characters</h3>
+              <p class="text-sm text-inkmuted mt-2.5 leading-relaxed">
+                Bringing 2D comic IP, sci-fi heroes, and RPG monsters into real-time 3D with clean quad topology and studio PBR materials.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10">
+              <span class="text-[11px] uppercase tracking-wider text-amberbrand font-semibold">Deliverables</span>
+              <p class="text-xs text-inkprimary mt-1">Clean retopology, UV-mapped, PBR textured FBX / GLB</p>
+            </div>
+          </div>
+
+          <!-- Service 4 -->
+          <div class="studio-card rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amberbrand/15 border border-amberbrand/30 flex items-center justify-center text-amberbrand mb-5">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-inkprimary">Mascots &amp; Commercial Animation</h3>
+              <p class="text-sm text-inkmuted mt-2.5 leading-relaxed">
+                Memorable 3D brand mascots, custom environments, and punchy promotional animations built to grab attention on social and screens.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10">
+              <span class="text-[11px] uppercase tracking-wider text-amberbrand font-semibold">Deliverables</span>
+              <p class="text-xs text-inkprimary mt-1">Custom brand mascots, rigging, promo loops (MP4 / Blend)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 6. OUR 4-STEP PIPELINE ==================== -->
+    <section id="pipeline" class="py-20 sm:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">Transparent Workflow</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">Our 4-Step Studio Pipeline</h2>
+          <p class="text-inkmuted mt-3 text-sm sm:text-base">
+            You approve every major milestone before we move forward&mdash;so there are zero surprises at final delivery.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          <!-- Step 01 -->
+          <div class="studio-card rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-display font-bold text-3xl text-amberbrand/90">01</span>
+              <span class="text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 text-inkmuted">Kickoff</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-inkprimary">Brief &amp; References</h3>
+            <p class="text-sm text-inkmuted mt-2 leading-relaxed">
+              Share your concept art, sketches, scale requirements, or brand guidelines. We lock in the timeline, deliverables, and target format.
+            </p>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="studio-card rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-display font-bold text-3xl text-amberbrand/90">02</span>
+              <span class="text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-amberbrand/15 text-amber-300">Checkpoint</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-inkprimary">ZBrush Clay Sculpt Review</h3>
+            <p class="text-sm text-inkmuted mt-2 leading-relaxed">
+              We block out anatomy, silhouette, and fine details in ZBrush clay. You inspect turnaround views and request silhouette or pose tweaks.
+            </p>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="studio-card rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-display font-bold text-3xl text-amberbrand/90">03</span>
+              <span class="text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 text-inkmuted">Engineering</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-inkprimary">Texturing / Rigging / Print-Prep</h3>
+            <p class="text-sm text-inkmuted mt-2 leading-relaxed">
+              Depending on your goal: 4K Substance PBR texturing &amp; rigging for games/video, or hollowing, keying, and joint tolerance checks for 3D printing.
+            </p>
+          </div>
+
+          <!-- Step 04 -->
+          <div class="studio-card rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-display font-bold text-3xl text-amberbrand/90">04</span>
+              <span class="text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300">Launch</span>
+            </div>
+            <h3 class="font-display font-bold text-lg text-inkprimary">Final Production Delivery</h3>
+            <p class="text-sm text-inkmuted mt-2 leading-relaxed">
+              Clean, organized production files delivered ready for immediate printing, engine import, or marketing release&mdash;plus high-res beauty renders.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7. CLIENT TESTIMONIALS ==================== -->
+    <section class="py-20 sm:py-28 bg-slatecard/30 border-y border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">Client Feedback</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">What Clients Say</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Testimonial 1: Red Writer LLC -->
+          <div class="studio-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amberbrand mb-4" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+              </div>
+              <p class="text-sm sm:text-base text-inkprimary/90 leading-relaxed">
+                &ldquo;Translating our comic book universe into 3D was a huge step for our IP. Shosha Studio nailed the personality and proportions of Captain Valya Petrov, Big Ron, and King Fenrir right from the clay sculpt stage.&rdquo;
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <div class="font-display font-bold text-sm text-inkprimary">Red Writer LLC</div>
+                <div class="text-xs text-inkmuted">Comic &amp; IP Character Development</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-amberbrand/10 text-amberbrand text-[11px] font-semibold">Characters</span>
+            </div>
+          </div>
+
+          <!-- Testimonial 2: Inflatable World / PCYC -->
+          <div class="studio-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amberbrand mb-4" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+              </div>
+              <p class="text-sm sm:text-base text-inkprimary/90 leading-relaxed">
+                &ldquo;From modeling our SUMO mascot to building the full Slam Dunk inflatable arena and promo animations, the energy and polish exceeded expectations. Communication was fast and super easy.&rdquo;
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <div class="font-display font-bold text-sm text-inkprimary">Inflatable World / PCYC</div>
+                <div class="text-xs text-inkmuted">Brand Mascot &amp; 3D Promo</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-amberbrand/10 text-amberbrand text-[11px] font-semibold">Animation</span>
+            </div>
+          </div>
+
+          <!-- Testimonial 3: 3D Museum -->
+          <div class="studio-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amberbrand mb-4" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+              </div>
+              <p class="text-sm sm:text-base text-inkprimary/90 leading-relaxed">
+                &ldquo;The classical drapery and facial anatomy on the Demetra statue were museum-grade. The final STL came completely watertight and printed cleanly on our first resin run without any mesh repair.&rdquo;
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <div class="font-display font-bold text-sm text-inkprimary">3D Museum</div>
+                <div class="text-xs text-inkmuted">Classical Sculpture &amp; 3D Print</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-amberbrand/10 text-amberbrand text-[11px] font-semibold">3D Print</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 8. INTERACTIVE FAQ ACCORDION ==================== -->
+    <section id="faq" class="py-20 sm:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">Common Questions</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-3.5" id="faq-list">
+          <!-- FAQ 1 -->
+          <div class="faq-item rounded-2xl bg-slatecard border border-white/10 overflow-hidden" data-open="true">
+            <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+              <span class="font-display font-semibold text-base text-inkprimary">What is the typical turnaround time for a custom 3D model?</span>
+              <svg class="faq-chevron w-5 h-5 text-inkmuted shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner px-6 pb-5 text-sm text-inkmuted leading-relaxed">
+                Standard printable miniatures and busts typically take <strong class="text-inkprimary">5&ndash;10 days</strong>. Full game-ready characters, articulated action figures, or rigged mascot animations range from <strong class="text-inkprimary">2&ndash;4 weeks</strong> depending on complexity and detail level. Rush slots are available upon request.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item rounded-2xl bg-slatecard border border-white/10 overflow-hidden" data-open="false">
+            <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+              <span class="font-display font-semibold text-base text-inkprimary">Which file formats do you deliver?</span>
+              <svg class="faq-chevron w-5 h-5 text-inkmuted shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner px-6 pb-5 text-sm text-inkmuted leading-relaxed">
+                For 3D printing: watertight <strong class="text-inkprimary">STL and OBJ</strong> (both merged and cut/keyed versions). For games &amp; animation: <strong class="text-inkprimary">FBX, GLB, Blend</strong>, plus 4K PBR texture maps (Base Color, Normal, Roughness, Metallic). Source ZBrush (.ZTL) files can also be included in commercial packages.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item rounded-2xl bg-slatecard border border-white/10 overflow-hidden" data-open="false">
+            <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+              <span class="font-display font-semibold text-base text-inkprimary">How do revisions work during the clay sculpt stage?</span>
+              <svg class="faq-chevron w-5 h-5 text-inkmuted shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner px-6 pb-5 text-sm text-inkmuted leading-relaxed">
+                We send multi-angle ZBrush clay screenshots (front, side, back, 3/4) before moving to texturing or keying. This is the easiest stage to refine proportions, armor shapes, or expressions, and every commission includes structured revision rounds so you're 100% happy with the sculpt first.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item rounded-2xl bg-slatecard border border-white/10 overflow-hidden" data-open="false">
+            <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+              <span class="font-display font-semibold text-base text-inkprimary">Do you handle 3D printing tolerances, keying, and ball-joints?</span>
+              <svg class="faq-chevron w-5 h-5 text-inkmuted shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner px-6 pb-5 text-sm text-inkmuted leading-relaxed">
+                Yes. All printable models are checked for manifold/watertight geometry, minimum wall thickness, and proper clearance tolerances (typically 0.2mm&ndash;0.3mm for resin keys and articulated joints) so parts fit cleanly right off the build plate.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item rounded-2xl bg-slatecard border border-white/10 overflow-hidden" data-open="false">
+            <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+              <span class="font-display font-semibold text-base text-inkprimary">Do I get full commercial usage rights for my project?</span>
+              <svg class="faq-chevron w-5 h-5 text-inkmuted shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-inner px-6 pb-5 text-sm text-inkmuted leading-relaxed">
+                Yes&mdash;full commercial rights for manufacturing, Kickstarter/Patreon releases, games, and brand campaigns are available and clearly agreed upon upfront. If your project is under NDA, we keep it strictly private until launch.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 9. COMMISSION & CONTACT SECTION ==================== -->
+    <section id="contact" class="py-20 sm:py-28 bg-slatecard/30 border-t border-white/10 relative overflow-hidden">
+      <div class="pointer-events-none absolute -bottom-24 left-1/2 -translate-x-1/2 w-[560px] h-[300px] rounded-full bg-amberbrand/10 blur-[130px]"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+
+          <!-- Left Column: Direct Contact Cards -->
+          <div class="lg:col-span-5 space-y-6">
+            <div>
+              <span class="text-xs font-semibold uppercase tracking-[0.22em] text-amberbrand">Start Your Project</span>
+              <h2 class="font-display font-bold text-3xl sm:text-4xl text-inkprimary mt-2">Let&rsquo;s Sculpt Something Unforgettable.</h2>
+              <p class="text-inkmuted mt-3 text-sm sm:text-base leading-relaxed">
+                Send your idea via the commission form, or reach out directly on Instagram DM or email for a quick quote.
+              </p>
+            </div>
+
+            <div class="space-y-3.5">
+              <!-- Instagram DM Card -->
+              <a href="https://www.instagram.com/shosha.studio/" target="_blank" rel="noopener noreferrer" class="studio-card rounded-2xl p-5 flex items-center justify-between gap-4 group block">
+                <div class="flex items-center gap-4">
+                  <div class="w-11 h-11 rounded-xl bg-amberbrand/15 border border-amberbrand/30 flex items-center justify-center text-amberbrand shrink-0">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs uppercase tracking-wider text-amberbrand font-semibold">Fastest Response</div>
+                    <div class="font-display font-bold text-base text-inkprimary">Instagram DM &mdash; @shosha.studio</div>
+                  </div>
+                </div>
+                <svg class="w-5 h-5 text-inkmuted group-hover:text-amberbrand group-hover:translate-x-1 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+              </a>
+
+              <!-- Email Card with Copy Button -->
+              <div class="studio-card rounded-2xl p-5 flex items-center justify-between gap-4">
+                <a href="mailto:hello@shoshastudio.com" class="flex items-center gap-4 min-w-0">
+                  <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amberbrand shrink-0">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/>
+                      <path d="M22 7l-10 6L2 7"/>
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-xs uppercase tracking-wider text-inkmuted font-semibold">Studio Email</div>
+                    <div class="font-display font-bold text-base text-inkprimary truncate">hello@shoshastudio.com</div>
+                  </div>
+                </a>
+                <button id="copy-email-btn" type="button" class="px-3 py-1.5 rounded-lg bg-obsidian border border-white/10 text-xs font-medium text-inkmuted hover:text-amberbrand hover:border-amberbrand/40 transition-colors shrink-0">
+                  Copy
+                </button>
+              </div>
+
+              <!-- ArtStation Card -->
+              <a href="https://www.artstation.com/shoshastudio" target="_blank" rel="noopener noreferrer" class="studio-card rounded-2xl p-5 flex items-center justify-between gap-4 group block">
+                <div class="flex items-center gap-4">
+                  <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amberbrand shrink-0">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 19 22 19 12 2"/>
+                      <line x1="7" y1="15" x2="17" y2="15"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs uppercase tracking-wider text-inkmuted font-semibold">Portfolio Archive</div>
+                    <div class="font-display font-bold text-base text-inkprimary">ArtStation &mdash; shoshastudio</div>
+                  </div>
+                </div>
+                <svg class="w-5 h-5 text-inkmuted group-hover:text-amberbrand group-hover:translate-x-1 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Commission Request Form -->
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl bg-slatecard border border-white/10 p-6 sm:p-8 shadow-card-dark">
+              <h3 class="font-display font-bold text-xl text-inkprimary mb-1">Commission Request</h3>
+              <p class="text-xs sm:text-sm text-inkmuted mb-6">Fill in your project details below to prepare a direct studio inquiry.</p>
+
+              <form id="commission-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="client-name" class="block text-xs font-semibold uppercase tracking-wider text-inkmuted mb-2">Your Name *</label>
+                    <input id="client-name" name="name" type="text" required placeholder="Alex Mercer" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-sm text-inkprimary placeholder-inkmuted/50 focus:outline-none focus:border-amberbrand transition-colors" />
+                  </div>
+                  <div>
+                    <label for="client-email" class="block text-xs font-semibold uppercase tracking-wider text-inkmuted mb-2">Email Address *</label>
+                    <input id="client-email" name="email" type="email" required placeholder="alex@studio.com" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-sm text-inkprimary placeholder-inkmuted/50 focus:outline-none focus:border-amberbrand transition-colors" />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="project-category" class="block text-xs font-semibold uppercase tracking-wider text-inkmuted mb-2">Project Category</label>
+                    <select id="project-category" name="category" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-sm text-inkprimary focus:outline-none focus:border-amberbrand transition-colors">
+                      <option value="3D Print & Miniatures">3D Print &amp; Miniatures</option>
+                      <option value="Game & Comic Characters">Game &amp; Comic Characters</option>
+                      <option value="Mascots & Animation">Mascots &amp; Animation</option>
+                      <option value="Action Figures">Action Figures</option>
+                      <option value="Other Custom 3D Project">Other Custom 3D Project</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="project-budget" class="block text-xs font-semibold uppercase tracking-wider text-inkmuted mb-2">Target Budget</label>
+                    <select id="project-budget" name="budget" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-sm text-inkprimary focus:outline-none focus:border-amberbrand transition-colors">
+                      <option value="$250 – $500">$250 &ndash; $500</option>
+                      <option value="$500 – $1,200" selected>$500 &ndash; $1,200</option>
+                      <option value="$1,200 – $3,000">$1,200 &ndash; $3,000</option>
+                      <option value="$3,000+ (Studio / Multi-Asset)">$3,000+ (Studio / Multi-Asset)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="project-brief" class="block text-xs font-semibold uppercase tracking-wider text-inkmuted mb-2">Project Brief *</label>
+                  <textarea id="project-brief" name="brief" rows="4" required placeholder="Tell us about your character, scale/format (STL, FBX, animation), reference links, and target deadline..." class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-sm text-inkprimary placeholder-inkmuted/50 focus:outline-none focus:border-amberbrand transition-colors resize-y"></textarea>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                  <button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amberbrand to-amberhot text-obsidian font-semibold text-sm hover:brightness-110 transition-all shadow-amber-glow">
+                    Prepare Commission Email
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                  </button>
+                  <span class="text-xs text-inkmuted">Opens a pre-filled email to <span class="text-inkprimary">hello@shoshastudio.com</span></span>
+                </div>
+              </form>
+
+              <!-- Clean Inline Confirmation Banner (Shown on Submit) -->
+              <div id="form-confirmation" class="hidden mt-5 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-sm text-emerald-200">
+                <div class="font-semibold text-emerald-300 mb-1">Commission brief ready!</div>
+                <p class="text-xs text-emerald-100/90 leading-relaxed">
+                  Your email client should open with your formatted brief. If it didn&rsquo;t open automatically, you can
+                  <a id="fallback-mailto-link" href="mailto:hello@shoshastudio.com" class="underline font-semibold text-amber-300 hover:text-amber-200">click here to send via email</a>
+                  or <a href="https://www.instagram.com/shosha.studio/" target="_blank" rel="noopener noreferrer" class="underline font-semibold text-amber-300 hover:text-amber-200">DM us on Instagram</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 10. FOOTER ==================== -->
+  <footer class="bg-obsidian border-t border-white/10 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <!-- Brand -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amberbrand to-amberhot flex items-center justify-center">
+            <svg class="w-4 h-4 text-obsidian" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L20.5 7V17L12 22L3.5 17V7L12 2Z" />
+              <path d="M12 22V12" />
+              <path d="M20.5 7L12 12L3.5 7" />
+            </svg>
+          </div>
+          <div>
+            <span class="font-display font-bold tracking-wider text-sm text-inkprimary block">SHOSHA STUDIO</span>
+            <span class="text-xs text-inkmuted">3D Character Modeling &amp; Animation Studio</span>
+          </div>
+        </div>
+
+        <!-- Nav Links -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-inkmuted">
+          <a href="#work" class="hover:text-inkprimary transition-colors">Work</a>
+          <a href="#services" class="hover:text-inkprimary transition-colors">Services</a>
+          <a href="#pipeline" class="hover:text-inkprimary transition-colors">Pipeline</a>
+          <a href="#clients" class="hover:text-inkprimary transition-colors">Clients</a>
+          <a href="#faq" class="hover:text-inkprimary transition-colors">FAQ</a>
+          <a href="#contact" class="hover:text-inkprimary transition-colors">Contact</a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-3">
+          <a href="https://www.instagram.com/shosha.studio/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-2.5 rounded-xl bg-slatecard border border-white/10 text-inkmuted hover:text-amberbrand hover:border-amberbrand/40 transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="https://www.artstation.com/shoshastudio" target="_blank" rel="noopener noreferrer" aria-label="ArtStation" class="p-2.5 rounded-xl bg-slatecard border border-white/10 text-inkmuted hover:text-amberbrand hover:border-amberbrand/40 transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 19 22 19 12 2"/>
+              <line x1="7" y1="15" x2="17" y2="15"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-white/5 text-center text-xs text-inkmuted">
+        &copy; 2026 Shosha Studio. All rights reserved. Built for print, play &amp; performance.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== PORTFOLIO LIGHTBOX MODAL ==================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="animate-modal relative w-full max-w-4xl rounded-2xl bg-slatecard border border-white/15 shadow-card-dark overflow-hidden max-h-[92vh] flex flex-col">
+      <!-- Close Button -->
+      <button id="modal-close-btn" type="button" aria-label="Close Preview" class="absolute top-4 right-4 z-20 p-2 rounded-xl bg-obsidian/90 border border-white/15 text-inkmuted hover:text-inkprimary hover:border-amberbrand/50 transition-colors">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 overflow-y-auto">
+        <!-- Left: Large Artwork Preview -->
+        <div class="lg:col-span-7 bg-obsidian flex flex-col justify-between p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-white/10">
+          <div id="modal-visual" class="w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-obsidian flex items-center justify-center">
+            <!-- Injected SVG or real render image -->
+          </div>
+          <!-- Subtle Asset Path Tag for Easy Image Swapping -->
+          <div class="mt-3 flex items-center justify-between gap-2 text-[11px] font-mono text-inkmuted bg-slatecard/70 px-3 py-2 rounded-lg border border-white/5">
+            <span>Render slot:</span>
+            <span id="modal-asset-path" class="text-amber-300 truncate">assets/projects/sample.jpg</span>
+          </div>
+        </div>
+
+        <!-- Right: Project Details -->
+        <div class="lg:col-span-5 p-6 sm:p-7 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-amberbrand/15 border border-amberbrand/30 text-amber-300 text-xs font-semibold" id="modal-category">
+              Category
+            </div>
+
+            <div>
+              <h3 id="modal-title" class="font-display font-bold text-2xl text-inkprimary leading-tight">Project Title</h3>
+              <p class="text-sm text-amberbrand font-medium mt-1" id="modal-client">Client Name</p>
+            </div>
+
+            <p id="modal-description" class="text-sm text-inkmuted leading-relaxed">
+              Detailed project description.
+            </p>
+
+            <div class="space-y-3 pt-2 border-t border-white/10">
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-inkmuted font-semibold block">Tools Used</span>
+                <div id="modal-tools" class="flex flex-wrap gap-1.5 mt-1.5"></div>
+              </div>
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-inkmuted font-semibold block">Deliverables</span>
+                <p id="modal-deliverables" class="text-sm text-inkprimary font-medium mt-1"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button id="modal-commission-btn" type="button" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-amberbrand to-amberhot text-obsidian font-semibold text-sm hover:brightness-110 transition-all shadow-amber-glow">
+              Commission Similar Project
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STUDIO INTERACTIVITY SCRIPT ==================== -->
+  <script>
+    /**
+     * Portfolio Data Array
+     * TIP: When you upload your real renders to GitHub (e.g., inside assets/projects/),
+     * set `imageUrl: 'assets/projects/sumo-mascot.jpg'` on any project below to automatically
+     * display your real render instead of the stylized SVG preview.
+     */
+    const PORTFOLIO_PROJECTS = [
+      {
+        id: 'sumo-mascot',
+        title: 'SUMO Mascot & Slam Dunk Arena',
+        client: 'Inflatable World / PCYC',
+        category: 'Mascots & Animation',
+        tools: ['Blender', 'Substance 3D'],
+        deliverables: 'Rigged Mascot & Promo Animation',
+        assetPath: 'assets/projects/sumo-mascot.jpg',
+        imageUrl: '',
+        description: 'Custom stylized 3D brand mascot sculpted, rigged, and animated inside a bespoke Slam Dunk inflatable arena environment for commercial promotion.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="arenaBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0F172A"/>
+                <stop offset="65%" stop-color="#1E3A8A"/>
+                <stop offset="100%" stop-color="#0B0D12"/>
+              </linearGradient>
+              <linearGradient id="sumoSkin" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FDE047"/>
+                <stop offset="100%" stop-color="#D97706"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#arenaBg)"/>
+            <!-- Inflatable Arena Columns -->
+            <rect x="35" y="42" width="64" height="190" rx="18" fill="#16A34A" fill-opacity="0.35" stroke="#4ADE80" stroke-opacity="0.4"/>
+            <rect x="301" y="42" width="64" height="190" rx="18" fill="#16A34A" fill-opacity="0.35" stroke="#4ADE80" stroke-opacity="0.4"/>
+            <rect x="115" y="28" width="170" height="34" rx="10" fill="#1D4ED8" fill-opacity="0.65" stroke="#60A5FA" stroke-opacity="0.5"/>
+            <text x="200" y="50" text-anchor="middle" fill="#FDE047" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" letter-spacing="2">SLAM DUNK</text>
+            <!-- Arena Floor -->
+            <ellipse cx="200" cy="248" rx="150" ry="26" fill="#2563EB" fill-opacity="0.4" stroke="#60A5FA" stroke-opacity="0.35"/>
+            <!-- Stylized Sumo Silhouette -->
+            <circle cx="200" cy="112" r="26" fill="url(#sumoSkin)"/>
+            <circle cx="200" cy="84" r="10" fill="#111827"/>
+            <ellipse cx="200" cy="176" rx="48" ry="44" fill="url(#sumoSkin)"/>
+            <path d="M158 192 Q200 212 242 192 L232 224 L168 224 Z" fill="#1D4ED8" stroke="#93C5FD" stroke-width="1.5"/>
+            <text x="200" y="178" text-anchor="middle" fill="#0B0D12" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14">SUMO</text>
+            <!-- Basketball -->
+            <circle cx="200" cy="150" r="14" fill="#F97316" stroke="#7C2D12" stroke-width="1.5"/>
+          </svg>
+        `
+      },
+      {
+        id: 'demetra-statue',
+        title: 'Demetra Classical 3D Statue',
+        client: '3D Museum',
+        category: '3D Print & Miniatures',
+        tools: ['ZBrush', 'KeyShot'],
+        deliverables: 'Watertight High-Res STL',
+        assetPath: 'assets/projects/demetra-statue.jpg',
+        imageUrl: '',
+        description: 'Classical museum-grade bust featuring sculpted Greco-Roman drapery, fine facial anatomy, and watertight geometry engineered for high-resolution resin printing.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="museumLight" cx="45%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#E5E7EB" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#0B0D12" stop-opacity="1"/>
+              </radialGradient>
+              <linearGradient id="marbleClay" x1="20%" y1="0%" x2="80%" y2="100%">
+                <stop offset="0%" stop-color="#F9FAFB"/>
+                <stop offset="50%" stop-color="#9CA3AF"/>
+                <stop offset="100%" stop-color="#374151"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#museumLight)"/>
+            <!-- Pedestal -->
+            <rect x="155" y="246" width="90" height="22" rx="4" fill="#1F2937" stroke="#6B7280" stroke-opacity="0.4"/>
+            <!-- Classical Draped Bust -->
+            <path d="M126 246 C128 192 146 168 176 158 L224 158 C254 168 272 192 274 246 Z" fill="url(#marbleClay)"/>
+            <!-- Drapery Folds -->
+            <path d="M148 184 Q200 218 252 184" fill="none" stroke="#374151" stroke-width="2.5" stroke-opacity="0.6"/>
+            <path d="M142 208 Q200 240 258 208" fill="none" stroke="#374151" stroke-width="2.5" stroke-opacity="0.6"/>
+            <!-- Veil & Head -->
+            <path d="M158 158 C154 104 166 56 200 50 C234 56 246 104 242 158 Z" fill="url(#marbleClay)" opacity="0.92"/>
+            <ellipse cx="200" cy="108" rx="28" ry="36" fill="#E5E7EB"/>
+            <path d="M182 104 Q200 96 218 104" fill="none" stroke="#6B7280" stroke-width="1.5"/>
+            <path d="M192 126 Q200 130 208 126" fill="none" stroke="#6B7280" stroke-width="1.5"/>
+            <!-- Crown / Headpiece -->
+            <path d="M174 78 Q200 62 226 78" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-opacity="0.55"/>
+          </svg>
+        `
+      },
+      {
+        id: 'valya-petrov',
+        title: 'Captain Valya Petrov & IP Cast',
+        client: 'Red Writer LLC',
+        category: 'Game & Comic Characters',
+        tools: ['ZBrush', 'Blender', 'Substance 3D'],
+        deliverables: '3D Character Models (Valya, Big Ron, King Fenrir)',
+        assetPath: 'assets/projects/valya-petrov.jpg',
+        imageUrl: '',
+        description: 'Translating Red Writer LLC’s comic book cast—Captain Valya Petrov, Big Ron, and King Fenrir—into stylized, production-ready 3D character assets.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="valyaGlow" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#22C55E" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#0B0D12" stop-opacity="1"/>
+              </radialGradient>
+              <linearGradient id="emeraldHair" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4ADE80"/>
+                <stop offset="100%" stop-color="#15803D"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#valyaGlow)"/>
+            <!-- Tactical Suit Torso -->
+            <path d="M128 272 L144 198 L200 182 L256 198 L272 272 Z" fill="#111827" stroke="#22C55E" stroke-opacity="0.45" stroke-width="1.5"/>
+            <path d="M168 196 L168 272 M232 196 L232 272" stroke="#22C55E" stroke-width="4" stroke-opacity="0.7"/>
+            <!-- Stylized Green Hair -->
+            <path d="M142 152 C136 86 164 46 200 46 C236 46 264 86 258 152 C254 176 238 186 226 172 L174 172 C162 186 146 176 142 152 Z" fill="url(#emeraldHair)"/>
+            <!-- Face + Cyber Mask Split -->
+            <ellipse cx="200" cy="118" rx="34" ry="44" fill="#FDE68A" fill-opacity="0.9"/>
+            <path d="M166 118 C166 90 182 76 200 76 L200 162 C182 162 166 146 166 118 Z" fill="#1F2937" stroke="#9CA3AF" stroke-width="1.5"/>
+            <rect x="176" y="108" width="16" height="5" rx="2" fill="#4ADE80"/>
+            <circle cx="216" cy="112" r="3.5" fill="#111827"/>
+          </svg>
+        `
+      },
+      {
+        id: 'husk-mascot',
+        title: 'HUSK Stylized Brand Mascot',
+        client: 'HUSK',
+        category: 'Mascots & Animation',
+        tools: ['ZBrush', 'Blender'],
+        deliverables: 'Stylized 3D Character & Turntable',
+        assetPath: 'assets/projects/husk-mascot.jpg',
+        imageUrl: '',
+        description: 'Streetwear-inspired stylized mouse character featuring sculpted fur detail, leather jacket shaders, custom HUSK headwear, and studio turntable renders.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="huskBg" cx="50%" cy="45%" r="60%">
+                <stop offset="0%" stop-color="#374151" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#0B0D12" stop-opacity="1"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#huskBg)"/>
+            <!-- Leather Jacket & Red Turtleneck -->
+            <path d="M130 272 L148 192 L200 178 L252 192 L270 272 Z" fill="#111827" stroke="#4B5563" stroke-width="1.5"/>
+            <path d="M180 180 L220 180 L214 236 L186 236 Z" fill="#991B1B"/>
+            <!-- Big Stylized Ears -->
+            <circle cx="144" cy="108" r="28" fill="#6B7280"/>
+            <circle cx="144" cy="108" r="17" fill="#FCA5A5" fill-opacity="0.65"/>
+            <circle cx="256" cy="108" r="28" fill="#6B7280"/>
+            <circle cx="256" cy="108" r="17" fill="#FCA5A5" fill-opacity="0.65"/>
+            <!-- Head -->
+            <ellipse cx="200" cy="126" rx="46" ry="42" fill="#6B7280"/>
+            <!-- HUSK Cap -->
+            <path d="M158 106 C160 72 178 60 200 60 C222 60 240 72 242 106 Z" fill="#111827" stroke="#9CA3AF" stroke-opacity="0.4"/>
+            <rect x="188" y="72" width="24" height="22" rx="3" fill="#1F2937" stroke="#F3F4F6" stroke-width="1"/>
+            <text x="200" y="87" text-anchor="middle" fill="#F3F4F6" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="8">HUSK</text>
+            <!-- Dark Sunglasses -->
+            <ellipse cx="180" cy="124" rx="16" ry="12" fill="#030712" stroke="#9CA3AF" stroke-width="1.5"/>
+            <ellipse cx="220" cy="124" rx="16" ry="12" fill="#030712" stroke="#9CA3AF" stroke-width="1.5"/>
+            <line x1="196" y1="122" x2="204" y2="122" stroke="#9CA3AF" stroke-width="2"/>
+            <!-- Nose -->
+            <ellipse cx="200" cy="144" rx="7" ry="5" fill="#F472B6" fill-opacity="0.7"/>
+          </svg>
+        `
+      },
+      {
+        id: 'articulated-figure',
+        title: 'Articulated Ball-Jointed Figure',
+        client: 'Collectible Production',
+        category: 'Action Figures',
+        tools: ['ZBrush'],
+        deliverables: 'Keyed & Tolerance-Tested STL Parts',
+        assetPath: 'assets/projects/articulated-figure.jpg',
+        imageUrl: '',
+        description: 'Precision-engineered action figure base body with functional ball-jointed shoulders, elbows, hips, and knees—cut and tolerance-checked for resin printing.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#12161F"/>
+            <!-- Technical Blueprint Crosshairs -->
+            <line x1="200" y1="20" x2="200" y2="280" stroke="#F59E0B" stroke-opacity="0.18" stroke-dasharray="4 4"/>
+            <line x1="60" y1="150" x2="340" y2="150" stroke="#FFFFFF" stroke-opacity="0.08" stroke-dasharray="4 4"/>
+            <!-- Stylized Articulated Base Body -->
+            <ellipse cx="200" cy="54" rx="15" ry="20" fill="#9CA3AF"/>
+            <!-- Torso -->
+            <path d="M174 86 L226 86 L216 146 L184 146 Z" fill="#9CA3AF"/>
+            <!-- Pelvis -->
+            <path d="M182 152 L218 152 L210 176 L190 176 Z" fill="#9CA3AF"/>
+            <!-- Arms -->
+            <line x1="168" y1="92" x2="132" y2="148" stroke="#9CA3AF" stroke-width="11" stroke-linecap="round"/>
+            <line x1="232" y1="92" x2="268" y2="148" stroke="#9CA3AF" stroke-width="11" stroke-linecap="round"/>
+            <!-- Legs -->
+            <line x1="188" y1="176" x2="180" y2="262" stroke="#9CA3AF" stroke-width="13" stroke-linecap="round"/>
+            <line x1="212" y1="176" x2="220" y2="262" stroke="#9CA3AF" stroke-width="13" stroke-linecap="round"/>
+            <!-- Highlighted Ball-Joint Spheres -->
+            <g fill="#F59E0B" stroke="#0B0D12" stroke-width="1.5">
+              <circle cx="168" cy="92" r="7"/>
+              <circle cx="232" cy="92" r="7"/>
+              <circle cx="150" cy="120" r="6"/>
+              <circle cx="250" cy="120" r="6"/>
+              <circle cx="188" cy="174" r="7"/>
+              <circle cx="212" cy="174" r="7"/>
+              <circle cx="184" cy="222" r="6"/>
+              <circle cx="216" cy="222" r="6"/>
+            </g>
+            <text x="200" y="286" text-anchor="middle" fill="#9CA3AF" font-family="monospace" font-size="10">0.25MM JOINT CLEARANCE</text>
+          </svg>
+        `
+      },
+      {
+        id: 'rpg-dragon',
+        title: 'Tabletop RPG Wyvern & Dragon',
+        client: 'RPG Miniatures',
+        category: '3D Print & Miniatures',
+        tools: ['ZBrush'],
+        deliverables: 'Pre-Keyed 32mm/75mm Print STL',
+        assetPath: 'assets/projects/rpg-dragon.jpg',
+        imageUrl: '',
+        description: 'Dynamic tabletop RPG dragon centerpiece sculpted with layered scales, membrane wings, and a rocky scenic base—pre-keyed for effortless resin printing.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="dragonGlow" cx="55%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#0B0D12" stop-opacity="1"/>
+              </radialGradient>
+              <linearGradient id="dragonClay" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#F3F4F6"/>
+                <stop offset="100%" stop-color="#6B7280"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#dragonGlow)"/>
+            <!-- Scenic Rock Base -->
+            <ellipse cx="200" cy="248" rx="115" ry="22" fill="#1F2937" stroke="#F59E0B" stroke-opacity="0.35" stroke-width="1.5"/>
+            <polygon points="130,244 165,216 235,214 275,244" fill="#374151"/>
+            <!-- Sweeping Dragon Wings -->
+            <path d="M188 148 L72 64 C96 112 106 146 138 168 Z" fill="url(#dragonClay)" opacity="0.85"/>
+            <path d="M212 148 L328 56 C306 108 294 146 262 168 Z" fill="url(#dragonClay)" opacity="0.95"/>
+            <!-- Dragon Body, Neck & Tail -->
+            <path d="M142 224 C176 232 238 220 250 188 C262 156 236 128 242 96 C246 78 266 72 280 82 C264 88 262 104 252 126 C240 154 218 178 192 204 Z" fill="url(#dragonClay)"/>
+            <!-- Horns -->
+            <path d="M242 82 L222 54 M252 78 L244 48" stroke="#E5E7EB" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        `
+      },
+      {
+        id: 'scifi-cyborg',
+        title: 'Armored Sci-Fi Cyborg',
+        client: 'Game Development',
+        category: 'Game & Comic Characters',
+        tools: ['ZBrush', 'Substance 3D', 'Unity'],
+        deliverables: 'Game-Ready FBX & 4K PBR Maps',
+        assetPath: 'assets/projects/scifi-cyborg.jpg',
+        imageUrl: '',
+        description: 'Hard-surface sci-fi exo-suit character built with clean game topology, metallic chrome & gold PBR materials, and Unity-ready rig hierarchy.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cyborgGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="50%" stop-color="#F59E0B"/>
+                <stop offset="100%" stop-color="#78350F"/>
+              </linearGradient>
+              <linearGradient id="cyborgChrome" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#E2E8F0"/>
+                <stop offset="50%" stop-color="#475569"/>
+                <stop offset="100%" stop-color="#0F172A"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="#0B0D12"/>
+            <!-- Hex Grid Accent -->
+            <circle cx="200" cy="145" r="105" fill="#F59E0B" fill-opacity="0.08"/>
+            <!-- Exo Torso -->
+            <polygon points="145,148 200,132 255,148 242,248 158,248" fill="url(#cyborgChrome)" stroke="#F59E0B" stroke-opacity="0.5" stroke-width="1.5"/>
+            <polygon points="168,154 200,174 232,154 222,208 200,222 178,208" fill="url(#cyborgGold)"/>
+            <!-- Helmet -->
+            <path d="M168 92 C168 62 182 50 200 50 C218 50 232 62 232 92 L222 126 L178 126 Z" fill="url(#cyborgChrome)" stroke="#94A3B8"/>
+            <!-- Glowing Visor -->
+            <polygon points="200,76 218,104 182,104" fill="#0B0D12" stroke="#F59E0B" stroke-width="3"/>
+          </svg>
+        `
+      },
+      {
+        id: 'luminous-winged',
+        title: 'Luminous Winged Fantasy Character',
+        client: 'Original Look-Dev',
+        category: 'Game & Comic Characters',
+        tools: ['Blender', 'ZBrush'],
+        deliverables: 'Cinematic Render & Rig',
+        assetPath: 'assets/projects/luminous-winged.jpg',
+        imageUrl: '',
+        description: 'Atmospheric look-development piece combining sculpted fantasy drapery, emissive neon wing geometry, and dramatic volumetric night lighting.',
+        svg: `
+          <svg viewBox="0 0 400 300" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="orbLight" cx="50%" cy="46%" r="55%">
+                <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.55"/>
+                <stop offset="45%" stop-color="#1D4ED8" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#060813" stop-opacity="1"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#orbLight)"/>
+            <!-- Neon Wings -->
+            <g fill="none" stroke="#60A5FA" stroke-width="2" stroke-opacity="0.85">
+              <path d="M192 146 C140 82 72 78 64 116 C58 148 118 164 186 154"/>
+              <path d="M192 152 C142 124 88 142 94 172 C100 198 148 188 188 162"/>
+              <path d="M208 146 C260 82 328 78 336 116 C342 148 282 164 214 154"/>
+              <path d="M208 152 C258 124 312 142 306 172 C300 198 252 188 212 162"/>
+            </g>
+            <!-- Draped Silhouette -->
+            <circle cx="200" cy="96" r="14" fill="#1E3A8A"/>
+            <path d="M184 118 L216 118 L228 264 L172 264 Z" fill="#1E3A8A" stroke="#60A5FA" stroke-opacity="0.4"/>
+            <!-- Glowing Energy Orb -->
+            <circle cx="200" cy="144" r="18" fill="#DBEAFE"/>
+            <circle cx="200" cy="144" r="28" fill="#60A5FA" fill-opacity="0.35"/>
+            <!-- Floating Firefly Particles -->
+            <circle cx="118" cy="76" r="3" fill="#93C5FD"/>
+            <circle cx="286" cy="84" r="2.5" fill="#93C5FD"/>
+            <circle cx="242" cy="248" r="5" fill="#60A5FA"/>
+          </svg>
+        `
+      }
+    ];
+
+    // ==================== DOM REFERENCES ====================
+    const portfolioGrid = document.getElementById('portfolio-grid');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const modal = document.getElementById('lightbox-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalVisual = document.getElementById('modal-visual');
+    const modalTitle = document.getElementById('modal-title');
+    const modalClient = document.getElementById('modal-client');
+    const modalCategory = document.getElementById('modal-category');
+    const modalDescription = document.getElementById('modal-description');
+    const modalTools = document.getElementById('modal-tools');
+    const modalDeliverables = document.getElementById('modal-deliverables');
+    const modalAssetPath = document.getElementById('modal-asset-path');
+    const modalCommissionBtn = document.getElementById('modal-commission-btn');
+
+    let activeProjectCategory = '3D Print & Miniatures';
+
+    // ==================== RENDER PORTFOLIO CARDS ====================
+    function renderPortfolio(filter = 'All') {
+      try {
+        portfolioGrid.innerHTML = '';
+        const filtered = filter === 'All'
+          ? PORTFOLIO_PROJECTS
+          : PORTFOLIO_PROJECTS.filter(p => p.category === filter);
+
+        filtered.forEach(project => {
+          const card = document.createElement('article');
+          card.className = 'studio-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col';
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('role', 'button');
+          card.setAttribute('aria-label', `Inspect ${project.title}`);
+
+          const visualHtml = project.imageUrl
+            ? `<img src="${project.imageUrl}" alt="${project.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'" />`
+            : `<div class="w-full h-full group-hover:scale-105 transition-transform duration-500">${project.svg}</div>`;
+
+          card.innerHTML = `
+            <div class="relative aspect-[4/3] bg-obsidian overflow-hidden border-b border-white/10">
+              ${visualHtml}
+              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-obsidian/80 backdrop-blur-md border border-white/10 text-[10px] font-semibold uppercase tracking-wider text-amber-300">
+                ${project.category}
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-3">
+                <span class="px-2.5 py-1 rounded-lg bg-amberbrand text-obsidian text-[11px] font-bold">Inspect &rarr;</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-medium text-amberbrand">${project.client}</div>
+                <h3 class="font-display font-bold text-base text-inkprimary mt-1 group-hover:text-amber-300 transition-colors leading-snug">
+                  ${project.title}
+                </h3>
+              </div>
+              <div class="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
+                ${project.tools.map(t => `<span class="px-2 py-0.5 rounded bg-obsidian text-[11px] text-inkmuted border border-white/5">${t}</span>`).join('')}
+              </div>
+            </div>
+          `;
+
+          card.addEventListener('click', () => openLightbox(project));
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(project);
+            }
+          });
+
+          portfolioGrid.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Error rendering portfolio:', err);
+      }
+    }
+
+    // ==================== FILTER TAB LOGIC ====================
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedFilter = btn.getAttribute('data-filter');
+
+        filterButtons.forEach(b => {
+          b.className = 'filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slatecard border border-white/10 text-inkmuted hover:text-inkprimary hover:border-amberbrand/40';
+        });
+        btn.className = 'filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gradient-to-r from-amberbrand to-amberhot text-obsidian shadow-amber-glow';
+
+        renderPortfolio(selectedFilter);
+      });
+    });
+
+    // ==================== LIGHTBOX MODAL LOGIC ====================
+    function openLightbox(project) {
+      activeProjectCategory = project.category;
+      modalTitle.textContent = project.title;
+      modalClient.textContent = `Client: ${project.client}`;
+      modalCategory.textContent = project.category;
+      modalDescription.textContent = project.description;
+      modalDeliverables.textContent = project.deliverables;
+      modalAssetPath.textContent = project.assetPath;
+
+      modalTools.innerHTML = project.tools
+        .map(t => `<span class="px-2.5 py-1 rounded-lg bg-obsidian border border-white/10 text-xs font-medium text-inkprimary">${t}</span>`)
+        .join('');
+
+      modalVisual.innerHTML = project.imageUrl
+        ? `<img src="${project.imageUrl}" alt="${project.title}" class="w-full h-full object-contain" />`
+        : project.svg;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeLightbox);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeLightbox();
+    });
+
+    // "Commission Similar Project" jumps to form & pre-selects category
+    modalCommissionBtn.addEventListener('click', () => {
+      closeLightbox();
+      const categorySelect = document.getElementById('project-category');
+      if (categorySelect) {
+        const options = Array.from(categorySelect.options).map(o => o.value);
+        if (options.includes(activeProjectCategory)) {
+          categorySelect.value = activeProjectCategory;
+        }
+      }
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // ==================== HERO CLAY VS RENDER TOGGLE ====================
+    const toggleClay = document.getElementById('toggle-clay');
+    const toggleRender = document.getElementById('toggle-render');
+    const svgRender = document.getElementById('hero-svg-render');
+    const svgClay = document.getElementById('hero-svg-clay');
+    const heroPreviewTitle = document.getElementById('hero-preview-title');
+    const viewportBadge = document.getElementById('viewport-badge');
+    const viewportDot = document.getElementById('viewport-dot');
+    const viewportPoly = document.getElementById('viewport-poly');
+
+    function setHeroMode(mode) {
+      if (mode === 'clay') {
+        svgRender.classList.add('hidden');
+        svgClay.classList.remove('hidden');
+        heroPreviewTitle.textContent = 'ZBrush Clay Sculpt';
+        viewportBadge.textContent = 'MATCAP CLAY • RETOPO';
+        viewportPoly.textContent = 'CLEAN QUAD TOPOLOGY';
+        viewportDot.classList.remove('bg-amberbrand');
+        viewportDot.classList.add('bg-gray-300');
+
+        toggleClay.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-gradient-to-r from-amberbrand to-amberhot text-obsidian shadow';
+        toggleRender.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-inkmuted hover:text-inkprimary';
+        toggleClay.setAttribute('aria-selected', 'true');
+        toggleRender.setAttribute('aria-selected', 'false');
+      } else {
+        svgClay.classList.add('hidden');
+        svgRender.classList.remove('hidden');
+        heroPreviewTitle.textContent = 'Final PBR Render';
+        viewportBadge.textContent = 'SHADED • 4K PBR';
+        viewportPoly.textContent = '42.8K TRIS • WATERTIGHT';
+        viewportDot.classList.remove('bg-gray-300');
+        viewportDot.classList.add('bg-amberbrand');
+
+        toggleRender.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-gradient-to-r from-amberbrand to-amberhot text-obsidian shadow';
+        toggleClay.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-inkmuted hover:text-inkprimary';
+        toggleRender.setAttribute('aria-selected', 'true');
+        toggleClay.setAttribute('aria-selected', 'false');
+      }
+    }
+
+    toggleClay.addEventListener('click', () => setHeroMode('clay'));
+    toggleRender.addEventListener('click', () => setHeroMode('render'));
+
+    // ==================== MOBILE HAMBURGER MENU ====================
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIconOpen = document.getElementById('menu-icon-open');
+    const menuIconClose = document.getElementById('menu-icon-close');
+
+    function toggleMobileMenu() {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      menuIconOpen.classList.toggle('hidden');
+      menuIconClose.classList.toggle('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', String(isHidden));
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+      });
+    });
+
+    // ==================== FAQ ACCORDION ====================
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const isOpen = item.getAttribute('data-open') === 'true';
+        document.querySelectorAll('.faq-item').forEach(el => el.setAttribute('data-open', 'false'));
+        if (!isOpen) item.setAttribute('data-open', 'true');
+      });
+    });
+
+    // ==================== COPY EMAIL HELPER ====================
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    copyEmailBtn.addEventListener('click', () => {
+      try {
+        const tempInput = document.createElement('input');
+        tempInput.value = 'hello@shoshastudio.com';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        copyEmailBtn.textContent = 'Copied!';
+        copyEmailBtn.classList.add('text-amberbrand', 'border-amberbrand/50');
+        setTimeout(() => {
+          copyEmailBtn.textContent = 'Copy';
+          copyEmailBtn.classList.remove('text-amberbrand', 'border-amberbrand/50');
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+    });
+
+    // ==================== COMMISSION FORM HANDLER ====================
+    const commissionForm = document.getElementById('commission-form');
+    const formConfirmation = document.getElementById('form-confirmation');
+    const fallbackMailtoLink = document.getElementById('fallback-mailto-link');
+
+    commissionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const name = document.getElementById('client-name').value.trim();
+        const email = document.getElementById('client-email').value.trim();
+        const category = document.getElementById('project-category').value;
+        const budget = document.getElementById('project-budget').value;
+        const brief = document.getElementById('project-brief').value.trim();
+
+        const subject = encodeURIComponent(`[Shosha Studio Commission] ${category} — ${name}`);
+        const body = encodeURIComponent(
+          `Hi Shosha Studio,\n\n` +
+          `Name: ${name}\n` +
+          `Email: ${email}\n` +
+          `Project Category: ${category}\n` +
+          `Target Budget: ${budget}\n\n` +
+          `Project Brief:\n${brief}\n`
+        );
+
+        const mailtoUrl = `mailto:hello@shoshastudio.com?subject=${subject}&body=${body}`;
+        fallbackMailtoLink.setAttribute('href', mailtoUrl);
+        formConfirmation.classList.remove('hidden');
+
+        // Trigger user's default email app
+        window.location.href = mailtoUrl;
+      } catch (err) {
+        console.error('Form submit error:', err);
+      }
+    });
+
+    // Initial Portfolio Render
+    renderPortfolio('All');
+  </script>
+</body>
+</html>
